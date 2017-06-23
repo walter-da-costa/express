@@ -1,0 +1,5 @@
+.idea/*
+.idea
+.remember
+node_modules/*
+/node_modules/
