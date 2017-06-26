@@ -43,5 +43,12 @@ app.post('/', (request, response) => {
     }
 })
 
+app.get('/message/:id', (request, response) => {
+    var Message = require('./models/message')
+    Message.find(request.params.id, function (message) {
+        response.render('pages/message', {'message' : message})
+    })
+})
+
 /** =========== Port =========== */
 app.listen('8080');
