@@ -23,6 +23,8 @@
     "express": "^4.15.2",
     "express-session": "^1.15.3",
     "moment": "^2.18.1",
+    "mongodb": "^2.2.29",
+    "mongoose": "^4.11.0",
     "mysql": "^2.13.0",
     "nodemon": "^1.10.0"
   }
