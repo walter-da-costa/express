@@ -5,6 +5,7 @@ var session = require('express-session');
 var mongoose = require( 'mongoose' );
 var config = require('./config/config')
 var glob = require('glob')
+var moment = require(config.root + '/config/moment');
 
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -17,6 +18,8 @@ var models = glob.sync(config.root + '/models/*.js');
 models.forEach(function (model) {
   require(model);
 });
+
+var Message  = mongoose.model( 'Message' );
 
 /** =========== lancement d'express =========== */
 var app = express();
@@ -39,9 +42,14 @@ app.use(session({
 
 app.use(require('./middlewares/flash'))
 
+/** =========== Helpers =========== */
+
+app.locals.formatDateHelper = function(date) {
+  return moment(date).fromNow();
+}
+
 /** =========== Routes =========== */
 app.get('/', (request, response) => {
-    var Message  = mongoose.model( 'Message' );
     Message.
     find({}).
     exec( function ( err, messages ){
@@ -57,7 +65,6 @@ app.post('/', (request, response) => {
       request.flash('error', 'Il y a une erreur !')
       response.redirect('/');
     }else{
-      var Message  = mongoose.model( 'Message' );
       Message.create({ content: request.body.message, created_at: new Date },
       function (err, message) {
         if (err) return handleError(err);
@@ -68,7 +75,6 @@ app.post('/', (request, response) => {
 })
 
 app.get('/message/:id', (request, response) => {
-    var Message  = mongoose.model( 'Message' )
     Message.findById(request.params.id, function (err, message) {
       response.render('pages/message', {'message' : message})
     });

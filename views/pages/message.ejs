@@ -2,7 +2,7 @@
 
 <div class="ui comments">
         <div class="comment">
-            <div class="metadata">  </div>
+            <div class="metadata"> <%= formatDateHelper(message.created_at) %> </div>
             <a class="avatar" href="/message/<%= message.id %>">
                 <img src="https://cdn3.iconfinder.com/data/icons/users-6/100/654853-user-men-2-512.png">
             </a>
