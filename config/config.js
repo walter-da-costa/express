@@ -9,7 +9,7 @@ var config = {
       name: 'test-express'
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/test-express-development'
+    db: 'mongodb://localhost/testdb'
   },
 
   test: {
