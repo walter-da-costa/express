@@ -15,3 +15,18 @@ router.get('/', function (req, res, next) {
     });
   });
 });
+
+router.post('/', function (request, response, next) {
+  if(request.body.message === undefined || request.body.message ===''){
+      //request.flash('error', 'Il y a une erreur !')
+      //
+      response.redirect('/');
+    }else{
+      Message.create({ content: request.body.message, created_at: new Date },
+      function (err, message) {
+        if (err) return next(err);
+        //request.flash('success', 'Merci !')
+        response.redirect('/');
+      })
+    }
+});

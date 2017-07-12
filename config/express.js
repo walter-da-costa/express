@@ -1,6 +1,6 @@
 var express = require('express');
 var glob = require('glob');
-
+var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -16,7 +16,8 @@ module.exports = function(app, config) {
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'ejs');
 
-  // app.use(favicon(config.root + '/public/img/favicon.ico'));
+  app.use(favicon(path.join(config.root + '/public/img/favicon.ico')));
+  //console.log(path.join(config.root + '/public/img/favicon.ico'))
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
@@ -25,6 +26,7 @@ module.exports = function(app, config) {
   app.use(cookieParser());
   app.use(compress());
   app.use(express.static(config.root + '/public'));
+  console.log(config.root + '/public')
   app.use(methodOverride());
 
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
@@ -39,6 +41,7 @@ module.exports = function(app, config) {
   });
 
   /** =========== Helpers =========== */
+  var moment = require(config.root + '/config/moment');
   app.locals.formatDateHelper = function(date) {
     return moment(date).fromNow();
   }
