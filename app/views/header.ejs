@@ -14,3 +14,13 @@
     </div>
 
     <div class="ui main container">
+        <% if (locals.flash && locals.flash.error) {%>
+            <div class="ui negative message">
+                <%= flash.error %>
+            </div>
+        <% } %>
+        <% if (locals.flash && locals.flash.success) {%>
+            <div class="ui positive message">
+                <%= flash.success %>
+            </div>
+        <% } %>

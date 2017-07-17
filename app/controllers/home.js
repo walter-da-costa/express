@@ -8,6 +8,7 @@ module.exports = function (app) {
 };
 
 router.get('/', function (req, res, next) {
+  req.flash('info', 'Welcome');
   Message.find(function (err, messages) {
     if (err) return next(err);
     res.render('index', {
@@ -18,14 +19,13 @@ router.get('/', function (req, res, next) {
 
 router.post('/', function (request, response, next) {
   if(request.body.message === undefined || request.body.message ===''){
-      //request.flash('error', 'Il y a une erreur !')
-      //
+      request.flash('error', 'Pas de msg vide, svp !')
       response.redirect('/');
     }else{
       Message.create({ content: request.body.message, created_at: new Date },
       function (err, message) {
         if (err) return next(err);
-        //request.flash('success', 'Merci !')
+        request.flash('success', 'Msg enregistré !')
         response.redirect('/');
       })
     }
